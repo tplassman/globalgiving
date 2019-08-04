@@ -1,0 +1,10 @@
+body > header {
+    @include space($spacing-sm);
+    @include pad($spacing-sm);
+    border-bottom: 1px solid $color-br-gray-lt;
+
+    > h1 {
+        @include font("heading-xl");
+        text-align: center;
+    }
+}

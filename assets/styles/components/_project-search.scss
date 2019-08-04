@@ -1,0 +1,74 @@
+$handle: "project-search";
+
+.#{$handle} {
+    @include container;
+    @include space($spacing-md);
+    border-bottom: 1px solid $color-br-gray-lt;
+
+    > h2 {
+        @include font("heading-md");
+        @include full;
+        text-align: center;
+    }
+
+    > form {
+        @include span($cols: 4, $grid: $grid-sm);
+        @include push($grid: $grid-sm);
+        margin-top: $spacing-xs;
+
+        @media (min-width: $screen-sm-min) {
+            @include span($cols: 8, $grid: $grid-md);
+            @include push($grid: $grid-md);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        @media (min-width: $screen-md-min) {
+            @include span(12);
+            @include push
+            flex-wrap: nowrap;
+        }
+    }
+
+    &__input-cont {
+        margin-top: $spacing-xs;
+
+        @media (min-width: $screen-sm-min) {
+            @include listMargin($spacing-xs, true);
+            width: calc((100% / 3) - #{$spacing-sm});
+        }
+
+        @media (min-width: $screen-md-min) {
+            width: 100%;
+        }
+
+        > * {
+            display: block;
+            width: 100%;
+        }
+
+        &:last-child {
+            width: 100%;
+        }
+
+        > label {
+            @include font("link-md");
+        }
+
+        > [type="search"] {
+            height: $spacing-xs * 3;
+            line-height: $spacing-xs * 3;
+            padding: 0 $spacing-xs;
+        }
+
+        > select {
+            height: $spacing-xs * 3;
+        }
+
+        > [type="submit"] {
+            @include button;
+        }
+    }
+}

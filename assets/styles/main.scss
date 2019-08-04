@@ -1,0 +1,27 @@
+/**
+ * styles/main.scss
+ * Entry point for included styles
+ */
+
+/**
+ * Order is important in the base imports
+ */
+
+@import "base/reset";
+@import "base/variables";
+@import "base/typography";
+@import "base/elements";
+
+/**
+ * Order alphabetically
+ */
+
+// Utilities
+@import "utilities/buttons";
+@import "utilities/layout";
+
+// Components
+@import "components/footer";
+@import "components/header";
+@import "components/project-cards";
+@import "components/project-search";

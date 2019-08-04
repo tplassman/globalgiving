@@ -1,0 +1,98 @@
+{{ define "title" }}Global Giving Projects{{ end }}
+
+{{ define "content" }}
+    <section>
+        <div class="project-search">
+            <h2>Filter Projects</h2>
+            <form method="get">
+                <div class="project-search__input-cont">
+                    <label for="search">Search</label>
+                    <input
+                        type="search"
+                        id="search"
+                        name="search"
+                        value="{{ .Search }}"
+                        placeholder="Food for children" />
+                </div>
+                <div class="project-search__input-cont">
+                    <label for="theme">Theme</label>
+                    <select id="theme" name="theme">
+                        <option value="">All</option>
+                        {{ $theme := .Theme }}
+                        {{ range .Themes }}
+                            <option
+                                value="{{ printf "%s" .ID }}"
+                                {{ if eq .ID $theme }}selected{{ end }}>
+                                {{ printf "%s" .Name }}</option>
+                        {{ end }}
+                    </select>
+                </div>
+                <div class="project-search__input-cont">
+                    <label for="limit">Limit</label>
+                    <select id="limit" name="limit">
+                        {{ $limit := .Limit }}
+                        {{ range .Limits }}
+                          <option
+                              value="{{ printf "%d" . }}"
+                              {{ if eq . $limit }}selected{{ end }}>
+                              {{ printf "%d" . }}</option>
+                        {{ end }}
+                    </select>
+                </div>
+                <div class="project-search__input-cont">
+                    <input type="submit" value="Search" />
+                </div>
+            </form>
+        </div>
+    </section>
+    <section>
+        <div class="project-cards">
+            <h2>
+                All Projects
+                {{ if ne .Search "" }}Matching <em>"{{ .Search }}"</em>{{ end }}
+                {{ if ne .Theme "" }}Related to <em>{{ getThemeName .Theme }}</em>{{ end }}
+            </h2>
+            {{ if not .Results.Projects.List }}
+                <p>No projects found</p>
+            {{ else }}
+                {{ $count := len .Results.Projects.List }}
+                <p>{{ printf "Viewing %d of %d" $count .Results.NumberFound }}</p>
+                {{ range .Results.Projects.List }}
+                    {{ $progress := fundingProgress .Funding .Goal }}
+                    <article class="project-card">
+                        <a href="{{ .ProjectLink }}" title="Lean More">
+                            <img data-src="{{ .ImageLink }}" alt="{{ .Title }}" loading="lazy" />
+                            <noscript>
+                                <img src="{{ .ImageLink }}" alt="{{ .Title }}" loading="lazy" />
+                            </noscript>
+                        </a>
+                        <span>
+                            <em style="width:{{ $progress }}"></em>
+                        </span>
+                        <h5>Funding Progress <small>{{ $progress }}</small></h5>
+                        <h3>{{ .ID }} - {{ .Title }}</h3>
+                        <p>{{ excerpt .Summary }}</p>
+                        <a href="{{ .ProjectLink }}" title="Lean More">
+                            Learn More
+                        </a>
+                    </article>
+                {{ end }}
+            {{ end }}
+            <hr />
+            <form method="get">
+                <input type="hidden" name="theme" value="{{ .Theme }}" />
+                <input type="hidden" name="search" value="{{ .Search }}" />
+                <input type="hidden" name="limit" value="{{ .Limit }}" />
+                <input type="hidden" name="page" value="{{ getPrevPage }}" />
+                <input type="submit" value="Prev" {{ if not hasPrevPage }}disabled{{ end }} />
+            </form>
+            <form method="get">
+                <input type="hidden" name="theme" value="{{ .Theme }}" />
+                <input type="hidden" name="search" value="{{ .Search }}" />
+                <input type="hidden" name="limit" value="{{ .Limit }}" />
+                <input type="hidden" name="page" value="{{ getNextPage }}" />
+                <input type="submit" value="Next" {{ if not hasNextPage }}disabled{{ end }} />
+            </form>
+        </div>
+    </section>
+{{ end }}

@@ -1,0 +1,8 @@
+body > footer {
+    @include space($spacing-md);
+    @include pad($spacing-sm);
+
+    > p {
+        text-align: center;
+    }
+}

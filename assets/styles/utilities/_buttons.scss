@@ -1,0 +1,43 @@
+@mixin button($secondary: false) {
+    @include font("link-md");
+    @include pad($spacing-sm);
+    display: inline-block;
+    white-space: nowrap;
+    min-width: $max-width-xs;
+    height: $spacing-md;
+    line-height: $spacing-md;
+    background-color: $color-orange;
+    color: $color-white;
+    letter-spacing: 1px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color $animate-sm;
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    &:hover {
+        background-color: darken($color-orange, 5%);
+    }
+
+    @if ($secondary) {
+        background-color: $color-blue;
+
+        &:hover {
+            background-color: darken($color-blue, 5%);
+        }
+    }
+}
+
+@mixin linkButton() {
+    @include font("link-md");
+    line-height: $spacing-xs * 1.5;
+    color: $color-orange;
+    transition: color $animate-sm;
+
+    &:hover {
+        color: darken($color-orange, 5%);
+    }
+}

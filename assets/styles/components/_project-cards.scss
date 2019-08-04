@@ -1,0 +1,124 @@
+$handle: "project-cards";
+
+.#{$handle} {
+    @include container;
+    @include space($spacing-lg, 0);
+    background-color: $color-bg-gray-lt;
+
+    > h2 {
+        @include font("heading-md");
+        @include full;
+        text-align: center;
+    }
+
+    > p {
+        @include full;
+        @include pad($spacing-sm);
+        margin: $spacing-sm auto;
+        text-align: center;
+    }
+
+    > article {
+        @include span($cols: 4, $grid: $grid-sm);
+        @include push($grid: $grid-sm);
+        display: flex;
+        flex-direction: column;
+        margin-bottom: $spacing-md;
+        background-color: $color-white;
+
+        @media (min-width: $screen-sm-min) {
+            @include span($cols: (8 / 3), $grid: $grid-md);
+            @include push($grid: $grid-md);
+        }
+
+        @media (min-width: $screen-md-min) {
+            @include span(3);
+            @include push
+        }
+
+        @media (min-width: $screen-xl-min) {
+            @include span((12 / 5));
+        }
+
+        &:hover {
+            box-shadow: 2px 2px $spacing-xs $color-br-gray-lt;
+        }
+
+        > a {
+            display: block;
+            position: relative;
+            overflow: hidden;
+
+            > img {
+                display: block;
+                width: 100%;
+                transition: transform 0.5s ease-out
+            }
+        }
+
+        &:hover > a > img {
+            transform: scale(1.2);
+            transition: transform 2s ease-out
+        }
+
+        > h5 {
+            @include pad($spacing-sm);
+            margin-top: $spacing-xs / 2;
+            text-align: right;
+        }
+
+        > span {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: $spacing-xs / 2;
+            background-color: $color-br-gray-lt;
+
+            > em {
+                @include absolute(0, auto, 0, 0);
+                background-color: $color-orange;
+            }
+        }
+
+        > h3 {
+            @include font("heading-sm");
+            @include pad($spacing-sm);
+            margin-top: $spacing-sm;
+        }
+
+        > p {
+            @include font("body-sm");
+            @include pad($spacing-sm);
+            max-width: $max-width-sm;
+            margin-top: $spacing-xs;
+            margin-bottom: $spacing-sm;
+        }
+
+        > a:last-child {
+            @include button(true);
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 0
+        }
+    }
+
+    > hr {
+        display: block;
+        width: 100%;
+        border: 0;
+    }
+
+    > form {
+        width: 50%;
+
+        > [type="submit"] {
+            @include button;
+            width: 100%;
+
+            @media (min-width: $screen-sm-min) {
+                height: $spacing-sm * 3;
+                line-height: $spacing-sm * 3;
+            }
+        }
+    }
+}
