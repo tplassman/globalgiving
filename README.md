@@ -9,14 +9,16 @@ Filterable listing page for GlobalGiving projects using the GlobalGiving project
 ### Requirements
 
 * [Go](https://golang.org/dl/) v1.11 or higher
-* [NodeJS](https://nodejs.org/en/) v8.16.0 or higher (optional)
-* [npm](https://www.npmjs.com/get-npm) v6.4.1 or higher (optional)
+* [NodeJS](https://nodejs.org/en/) v8.16.0 or higher (development only)
+* [npm](https://www.npmjs.com/get-npm) v6.4.1 or higher (development only)
 
 ### Server Build Process
 
 1. Copy `.example-env` to `.env`.
 
-    `$ cp .env-example .env`
+    ```
+    $ cp .env-example .env
+    ```
 
 2. Add GlobalGiving API key to .env file.
 
@@ -37,9 +39,9 @@ Filterable listing page for GlobalGiving projects using the GlobalGiving project
 
 4. Visit `localhost:8080` in web browser.
 
-## Assets Builld Process (optional - development only)
+## Assets Builld Process (development only)
 
-Styles and scripts are built from `assets` directory into `static` directory
+Styles and scripts are built from `assets` directory into `static` directory.
 
 1. Install front end dependencies.
 
@@ -47,7 +49,7 @@ Styles and scripts are built from `assets` directory into `static` directory
     $ npm install
     ```
 
-2. Build or watch assets
+2. Build or watch assets.
 
     ```
     $ gulp build
@@ -68,10 +70,11 @@ This challenge of this project was to extend the limit of the GlobalGiving proje
 This project works to display a filterable list of active GlobalGiving projects.
 
 * Filtering options are limited to search input and theme. Consider extending to country and organization since those are directly supported by the GlobalGiving API.
-* Add sorting functionality to front end form to allow sorting by project attributes (e.g. date, funding progress, etc.)
-* Dynamically populate theme options in filter form to ensure options are always up to date.
-* Update URL structure so that category filters such as theme and organization would user path slugs instead of query string parameters for better looking URLs
+* Add sorting functionality to filter form to allow sorting by project attributes (e.g. date, funding progress, etc.).
+* Dynamically populate filter options (e.g. theme) in filter form from API to ensure options are always up to date.
+* Update URL structure so category filters such as theme and organization would use path slugs instead of query parameters for better looking URLs.
 * The server currently routes all requests to the projects handler. Non-supported routes should be sent to a 404 handler.
-* As more routes are added to the application the templating logic could be abstracted into dedicated package that would also parse an option `templates/_components` directory to allow for nesting reusable component partials into route pages.
+* As more routes are added to the application, the templating logic could be abstracted into dedicated package that would also parse an option `templates/_components` directory to allow for nesting reusable component partials into route pages.
 * Create `templates/_components` directory to encapsulate component markup.
 * Add `scripts/components` directory and corresponding component utilities to encapselate component scripts in a single class.
+* Pass environment variables into templates to allow for live reloading of assets in development
