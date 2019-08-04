@@ -22,14 +22,18 @@ Filterable listing page for GlobalGiving projects using the GlobalGiving project
 
 3. Build or run server in `cmd` directory.
 
-    `$ cd cmd`
-    `$ go build server.go`
-    `$ cd ..`
-    `$ ./cmd/server`
+    ```
+    $ cd cmd
+    $ go build server.go
+    $ cd ..
+    $ ./cmd/server
+    ```
 
     or
 
-    `$ go run cmd/server.go`
+    ```
+    $ go run cmd/server.go
+    ```
 
 4. Visit `localhost:8080` in web browser.
 
@@ -39,15 +43,21 @@ Styles and scripts are built from `assets` directory into `static` directory
 
 1. Install front end dependencies.
 
-    `npm install`
+    ```
+    $ npm install
+    ```
 
 2. Build or watch assets
 
-    `gulp build`
+    ```
+    $ gulp build
+    ```
 
     or
 
-    `gulp watch`
+    ```
+    $ gulp watch
+    ```
 
 ## Features
 
