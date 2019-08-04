@@ -60,19 +60,19 @@
                 {{ range .Results.Projects.List }}
                     {{ $progress := fundingProgress .Funding .Goal }}
                     <article class="project-card">
-                        <a href="{{ .ProjectLink }}" title="Lean More">
+                        <a href="{{ .ProjectLink }}" title="Lean More" target="_blank" rel="noopener">
                             <img data-src="{{ .ImageLink }}" alt="{{ .Title }}" loading="lazy" />
                             <noscript>
                                 <img src="{{ .ImageLink }}" alt="{{ .Title }}" loading="lazy" />
                             </noscript>
                         </a>
                         <span>
-                            <em style="width:{{ $progress }}"></em>
+                            <em style="width:{{ $progress }}%"></em>
                         </span>
-                        <h5>Funding Progress <small>{{ $progress }}</small></h5>
+                        <h5><strong>{{ $progress }}%&nbsp;</strong>Funded</h5>
                         <h3>{{ .ID }} - {{ .Title }}</h3>
                         <p>{{ excerpt .Summary }}</p>
-                        <a href="{{ .ProjectLink }}" title="Lean More">
+                        <a href="{{ .ProjectLink }}" title="Lean More" target="_blank" rel="noopener">
                             Learn More
                         </a>
                     </article>

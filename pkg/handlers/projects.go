@@ -76,7 +76,9 @@ func ProjectsHandler(w http.ResponseWriter, r *http.Request) {
 				return float64(0)
 			}
 
-			return math.Min(funding/goal, float64(100))
+			progress := math.Floor(funding/goal*100*10) / 10
+
+			return math.Min(progress, float64(100))
 		},
 		"getThemeName": func(id string) string {
 			name := ""

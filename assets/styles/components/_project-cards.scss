@@ -65,9 +65,15 @@ $handle: "project-cards";
         }
 
         > h5 {
+            @include font("body-sm");
             @include pad($spacing-sm);
             margin-top: $spacing-xs / 2;
             text-align: right;
+
+            > strong {
+                @include bold;
+                color: $color-orange
+            }
         }
 
         > span {

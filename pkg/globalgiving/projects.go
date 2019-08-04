@@ -65,7 +65,7 @@ func getResults(c *client, r *http.Request) (SearchResults, error) {
 func getRequest(c *client, v url.Values) (*http.Request, error) {
 	// Build out projects request from client and values
 	u := c.baseURL.ResolveReference(&url.URL{
-		Path:     "/api/public/services/search/projects/summary",
+		Path:     "/api/public/services/search/projects",
 		RawQuery: v.Encode(),
 	})
 	// Make request from URL string
@@ -104,6 +104,11 @@ func getValues(c *client, s ProjectSearch) url.Values {
 	return v
 }
 
+type response struct {
+	index   int
+	results SearchResults
+}
+
 func GetProjects(s ProjectSearch) (SearchResults, error) {
 	// Global Giving API limits results set to maximum of 10
 	limit := 10
@@ -111,15 +116,13 @@ func GetProjects(s ProjectSearch) (SearchResults, error) {
 	count := int(math.Max(float64(s.Limit)/float64(limit), float64(1)))
 	// Create client to use for requests
 	c := newClient()
-	// Create empty results set to populate
-	results := SearchResults{}
 	// Create channels to pass API responses and errors
-	ch := make(chan SearchResults, count)
+	ch := make(chan response, count)
 	errch := make(chan error)
 
 	fmt.Printf("Making %d requests real quick\n", count)
 	for i := 0; i < count; i++ {
-		go func(c *client, s ProjectSearch) {
+		go func(c *client, s ProjectSearch, i int) {
 			v := getValues(c, s)
 			r, err := getRequest(c, v)
 			if err != nil {
@@ -131,23 +134,29 @@ func GetProjects(s ProjectSearch) (SearchResults, error) {
 				errch <- err
 				return
 			}
-			ch <- sr
-		}(c, s)
+			ch <- response{i, sr}
+		}(c, s, i)
 
 		// Increase starting position for next request
 		s.Start = s.Start + limit
 	}
+
+	// Need to store total number of results returned to break if we have enough
+	total := 0
+	// Create map to store results in w/ index as key
+	responseMap := make(map[int]SearchResults)
 
 	// Wait for return from all porject requests
 	for i := 0; i < count; i++ {
 		select {
 		case err := <-errch:
 			fmt.Printf("Error fetching projects: %s", err)
-		case sr := <-ch:
-			results.Projects.List = append(results.Projects.List, sr.Projects.List...)
-			results.NumberFound = sr.NumberFound
+		case res := <-ch:
+			responseMap[res.index] = res.results
 
-			if len(results.Projects.List) == results.NumberFound {
+			// Check if we got what we were looking for
+			total += len(res.results.Projects.List)
+			if total == res.results.NumberFound {
 				break
 			}
 		}
@@ -156,6 +165,15 @@ func GetProjects(s ProjectSearch) (SearchResults, error) {
 	// Close open channels
 	close(ch)
 	close(errch)
+
+	// Create empty results set to populate and return
+	results := SearchResults{}
+	// Order results using map keys
+	for i := 0; i < count; i++ {
+		sr := responseMap[i]
+		results.Projects.List = append(results.Projects.List, sr.Projects.List...)
+		results.NumberFound = sr.NumberFound
+	}
 
 	return results, nil
 }
