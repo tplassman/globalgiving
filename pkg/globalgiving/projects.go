@@ -37,7 +37,7 @@ type ProjectSearch struct {
 	Start  int
 }
 
-func getProjects(c *client, r *http.Request) (SearchResults, error) {
+func getResults(c *client, r *http.Request) (SearchResults, error) {
 	// Get API response
 	res, err := c.httpClient.Do(r)
 	if err != nil {
@@ -113,7 +113,7 @@ func GetProjects(s ProjectSearch) (SearchResults, error) {
 	c := newClient()
 	// Create empty results set to populate
 	results := SearchResults{}
-
+	// Create channels to pass API responses and errors
 	ch := make(chan SearchResults, count)
 	errch := make(chan error)
 
@@ -126,7 +126,7 @@ func GetProjects(s ProjectSearch) (SearchResults, error) {
 				errch <- err
 				return
 			}
-			sr, err := getProjects(c, r)
+			sr, err := getResults(c, r)
 			if err != nil {
 				errch <- err
 				return

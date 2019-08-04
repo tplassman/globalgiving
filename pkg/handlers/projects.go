@@ -26,12 +26,16 @@ func ProjectsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get search parameters from query
 	q := r.URL.Query()
-
 	limits := []int{10, 20, 50, 100, 1000}
 	limit, err := strconv.Atoi(q.Get("limit"))
 	if err != nil {
 		limit = limits[0]
+	}
+	// Don't allow limits larger than our largest
+	if limit > limits[len(limits)-1] {
+		limit = limits[len(limits)-1]
 	}
 	themes := globalgiving.GetThemes()
 	theme := q.Get("theme")
@@ -67,7 +71,6 @@ func ProjectsHandler(w http.ResponseWriter, r *http.Request) {
 
 			return summary
 		},
-
 		"fundingProgress": func(funding, goal float64) float64 {
 			if int(goal) == 0 {
 				return float64(0)
@@ -75,7 +78,6 @@ func ProjectsHandler(w http.ResponseWriter, r *http.Request) {
 
 			return math.Min(funding/goal, float64(100))
 		},
-
 		"getThemeName": func(id string) string {
 			name := ""
 			for _, t := range themes {
@@ -86,22 +88,10 @@ func ProjectsHandler(w http.ResponseWriter, r *http.Request) {
 
 			return name
 		},
-
-		"hasPrevPage": func() bool {
-			return page > 1
-		},
-
-		"getPrevPage": func() int {
-			return int(math.Min(float64(1), float64(page-1)))
-		},
-
-		"hasNextPage": func() bool {
-			return (page-1)*limit+len(results.Projects.List) < results.NumberFound
-		},
-
-		"getNextPage": func() int {
-			return page + 1
-		},
+		"hasPrevPage": func() bool { return page > 1 },
+		"getPrevPage": func() int { return int(math.Min(float64(1), float64(page-1))) },
+		"hasNextPage": func() bool { return (page-1)*limit+len(results.Projects.List) < results.NumberFound },
+		"getNextPage": func() int { return page + 1 },
 	}
 
 	// Render template

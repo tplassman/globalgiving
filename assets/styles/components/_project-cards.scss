@@ -23,8 +23,11 @@ $handle: "project-cards";
         @include push($grid: $grid-sm);
         display: flex;
         flex-direction: column;
+        position: relative;
+        overflow: hidden;
         margin-bottom: $spacing-md;
         background-color: $color-white;
+        border-radius: 3px;
 
         @media (min-width: $screen-sm-min) {
             @include span($cols: (8 / 3), $grid: $grid-md);
