@@ -28,7 +28,7 @@ func ProjectsHandler(w http.ResponseWriter, r *http.Request) {
 
 	q := r.URL.Query()
 
-	limits := []int{10, 20, 50, 100}
+	limits := []int{10, 20, 50, 100, 1000}
 	limit, err := strconv.Atoi(q.Get("limit"))
 	if err != nil {
 		limit = limits[0]
