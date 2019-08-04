@@ -39,7 +39,7 @@ Filterable listing page for GlobalGiving projects using the GlobalGiving project
 
 4. Visit `localhost:8080` in web browser.
 
-## Assets Builld Process (development only)
+### Assets Builld Process (development only)
 
 Styles and scripts are built from `assets` directory into `static` directory.
 
@@ -67,14 +67,14 @@ This challenge of this project was to extend the limit of the GlobalGiving proje
 
 ## Improvements
 
-This project works to display a filterable list of active GlobalGiving projects.
+The project works to display a filterable list of active GlobalGiving projects.
 
 * Filtering options are limited to search input and theme. Consider extending to country and organization since those are directly supported by the GlobalGiving API.
 * Add sorting functionality to filter form to allow sorting by project attributes (e.g. date, funding progress, etc.).
 * Dynamically populate filter options (e.g. theme) in filter form from API to ensure options are always up to date.
 * Update URL structure so category filters such as theme and organization would use path slugs instead of query parameters for better looking URLs.
 * The server currently routes all requests to the projects handler. Non-supported routes should be sent to a 404 handler.
-* As more routes are added to the application, the templating logic could be abstracted into dedicated package that would also parse an option `templates/_components` directory to allow for nesting reusable component partials into route pages.
-* Create `templates/_components` directory to encapsulate component markup.
-* Add `scripts/components` directory and corresponding component utilities to encapselate component scripts in a single class.
-* Pass environment variables into templates to allow for live reloading of assets in development
+* As more routes are added to the application, the templating logic could be abstracted into a dedicated package that would also parse an option `templates/_components` directory to allow for nesting reusable component partials into route pages.
+* Add a `templates/_components` directory to encapsulate component markup.
+* Add a `scripts/components` directory and corresponding component utilities to encapselate component scripts in a single class.
+* Pass environment variables into templates to allow for live reloading of assets in development.
