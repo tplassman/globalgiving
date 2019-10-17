@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"../globalgiving"
+	"github.com/tplassman/globalgiving/pkg/globalgiving"
 )
 
 type ViewData struct {
