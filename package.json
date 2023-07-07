@@ -43,7 +43,7 @@
         "gulp-svgstore": "^7.0.1",
         "gulp-twig": "^1.2.0",
         "gulp-uglify": "^3.0.2",
-        "stylelint": "^10.1.0",
+        "stylelint": "^15.10.1",
         "stylelint-order": "^3.0.0",
         "vinyl-buffer": "^1.0.1",
         "vinyl-source-stream": "^2.0.0",
